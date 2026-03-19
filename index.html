@@ -10,33 +10,25 @@
 </head>
 <body>
 
-    <video id="introVideo" autoplay muted playsinline preload="auto" style="width: 100vw; height: 100vh; object-fit: cover;">
-    <source src="intro.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
+    <video id="introVideo" autoplay muted playsinline>
+        <source src="https://cdn.discordapp.com/attachments/1458875540655313062/1484215821185323179/0f5d28e31740cf0c.mp4?ex=69bd6b33&is=69bc19b3&hm=57b4cfeca2f87d6e122aa559aea7069c00fa6caa70f72bafc65ab610d5ddc277&" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
     <script>
-    const video = document.getElementById('introVideo');
+        const video = document.getElementById('introVideo');
+        
+        // عند انتهاء الفيديو ينقلك تلقائياً لصفحة العمليات
+        video.onended = function() {
+            window.location.href = "home.html";
+        };
 
-    // محاولة تشغيل الفيديو برمجياً لضمان البدء
-    window.addEventListener('load', () => {
-        video.play().catch(error => {
-            console.log("Autoplay prevented, skipping to home...");
-            // إذا منع المتصفح التشغيل، ننتظر 3 ثواني ثم ننتقل
-            setTimeout(() => { window.location.href = "home.html"; }, 3000);
-        });
-    });
-
-    // عند انتهاء الفيديو
-    video.onended = function() {
-        window.location.href = "home.html";
-    };
-
-    // حل احتياطي نهائي: الانتقال بعد 6 ثواني مهما حدث
-    setTimeout(() => {
-        window.location.href = "home.html";
-    }, 6000);
-</script>
+        // حل احتياطي: إذا لم يشتغل الرابط خلال 6 ثواني، ينقلك لصفحة العمليات مباشرة
+        setTimeout(() => {
+            if (window.location.pathname.includes("index.html") || window.location.pathname.endsWith("/")) {
+                window.location.href = "home.html";
+            }
+        }, 6000);
+    </script>
 </body>
 </html>
-
