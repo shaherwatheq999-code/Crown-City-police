@@ -16,18 +16,27 @@
 </video>
 
     <script>
-        const video = document.getElementById('introVideo');
-        
-        // عند انتهاء الفيديو ينقلك لصفحة تصميمك
-        video.onended = function() {
-            window.location.href = "home.html";
-        };
+    const video = document.getElementById('introVideo');
 
-        // احتياطاً لو علق الفيديو، ينقلك بعد 5 ثواني
-        setTimeout(() => {
-            window.location.href = "home.html";
-        }, 5000);
-    </script>
+    // محاولة تشغيل الفيديو برمجياً لضمان البدء
+    window.addEventListener('load', () => {
+        video.play().catch(error => {
+            console.log("Autoplay prevented, skipping to home...");
+            // إذا منع المتصفح التشغيل، ننتظر 3 ثواني ثم ننتقل
+            setTimeout(() => { window.location.href = "home.html"; }, 3000);
+        });
+    });
+
+    // عند انتهاء الفيديو
+    video.onended = function() {
+        window.location.href = "home.html";
+    };
+
+    // حل احتياطي نهائي: الانتقال بعد 6 ثواني مهما حدث
+    setTimeout(() => {
+        window.location.href = "home.html";
+    }, 6000);
+</script>
 </body>
 </html>
 
